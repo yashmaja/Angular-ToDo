@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div
+  class="container" 
+  style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; background: linear-gradient(to top right, #9933ff 0%, #ffcc66 100%);"
+  >
+  <!--active todo list-->
+  <section>
+  <h1 class="display-4">To-Do List:</h1>
+  <br>
+  <ul class="list-group list-group-numbered" style="font-size: large;">
+    <div *ngFor="let item of Tasks; index as i">
+      <li class="list-group-item" *ngIf="item.completed == false"> 
+        <button type="button" class="btn btn-outline-success btn-sm" (click)="completeTask(i)">Complete</button>
+        {{ item.task }}
+        <div align="right">
+          <button type="button" class="btn-close" aria-label="Close" (click)="deleteTask(i)"></button>
+        </div>
+      </li>
+    </div>
+  </ul>
+  <br>
+  </section>
+
+  <!--add new task-->
+  <section>
+  <form #nameForm="ngForm" (ngSubmit)="addTask(nameForm)">
+    <label for="item"></label>
+    <input size="86" name="item" id="item" placeholder="Type your task here" ngModel />
+    <br><br>
+    <button class="col-12 btn btn-dark" style="font-size: x-large;">Add task</button>
+  </form>
+  <br><br>
+  </section>
+
+  <!--Completed lists-->
+  <section>
+  <h3 class="text-light">Completed tasks:</h3>
+  <br>
+  <ol class="list-group list-group-numbered">
+    <div *ngFor="let item of Tasks; index as i">
+      <li class="list-group-item" *ngIf="item.completed == true">
+        <button type="button" class="btn btn-outline-success btn-sm" (click)="restoreTask(i)">Restore</button>
+        <del> {{ item.task }}</del>
+        <div align="right">
+          <button type="button" class="btn-close" aria-label="Close" (click)="deleteTask(i)"></button>
+        </div>
+      </li>
+    </div>
+  </ol>
+  <br>
+  </section>
+  </div>
+</body>
+</html>
