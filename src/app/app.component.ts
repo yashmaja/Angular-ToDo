@@ -17,25 +17,42 @@ export class AppComponent {
     { task: 'look at christmas calendar', completed: false}
   ];
 
-  CompletedTasks : Todo[] = [];
-
   addTask (form : NgForm) : void {
     let newTaskName = form.form.value.item;
     let newTask : Todo = { task : newTaskName, completed : false}
     this.Tasks.push(newTask);
   }
 
-  allComplete : boolean = true;
+  allComplete() : boolean {
+    if (this.Tasks.length == 0) {
+      return true;
+    }
+    else if (this.Tasks.filter (t => t.completed == false).length == 0) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
 
   completeTask (itemIndex : number) : void {
     this.Tasks[itemIndex].completed = true;
   }
 
   deleteTask (itemIndex : number) : void {
-    this.Tasks.splice(itemIndex, 1);
+    let resultTask : Todo = this.filteredTasks[itemIndex];
+    this.filteredTasks.splice(itemIndex, 1);
+    let i : number = this.Tasks.indexOf(resultTask);
+    this.Tasks.splice(i, 1);
   }
 
   restoreTask (itemIndex : number) : void {
     this.Tasks[itemIndex].completed = false;
+  }
+
+  filteredTasks : Todo[] = this.Tasks;
+
+  filterTasks(input : string) {
+    this.filteredTasks = this.Tasks.filter(T => T.task.includes(input));
   }
 }

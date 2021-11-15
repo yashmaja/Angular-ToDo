@@ -15,8 +15,11 @@
   <section>
   <h1 class="display-4">To-Do List:</h1>
   <br>
+  <input (input)="filterTasks(filter.value)" #filter name="filter" id="filter" style="width: 100%;" placeholder="search for tasks"/>
+  <br><br>
+  <h3 class="text-center" *ngIf="allComplete() == true">You have no tasks right now!</h3>
   <ul class="list-group list-group-numbered" style="font-size: large;">
-    <div *ngFor="let item of Tasks; index as i">
+    <div *ngFor="let item of filteredTasks; index as i">
       <li class="list-group-item" *ngIf="item.completed == false"> 
         <button type="button" class="btn btn-outline-success btn-sm" (click)="completeTask(i)">Complete</button>
         {{ item.task }}
@@ -30,14 +33,14 @@
   </section>
 
   <!--add new task-->
-  <section>
-  <form #nameForm="ngForm" (ngSubmit)="addTask(nameForm)">
-    <label for="item"></label>
-    <input size="86" name="item" id="item" placeholder="Type your task here" ngModel />
+  <section class="text-center">
+    <form #nameForm="ngForm" (ngSubmit)="addTask(nameForm)">
+      <label for="item"></label>
+      <input type="text" style="width: 100%;" name="item" id="item" placeholder="Type your task here" ngModel />
+      <br><br>
+      <button class="btn btn-dark" style="font-size: x-large; width: 100%;">Add task</button>
+    </form>
     <br><br>
-    <button class="col-12 btn btn-dark" style="font-size: x-large;">Add task</button>
-  </form>
-  <br><br>
   </section>
 
   <!--Completed lists-->
